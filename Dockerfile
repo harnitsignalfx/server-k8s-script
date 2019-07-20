@@ -1,5 +1,9 @@
 FROM python:3.5-alpine
 
+apk add bash
+
+bash
+
 COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
