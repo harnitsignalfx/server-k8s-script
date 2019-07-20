@@ -8,13 +8,13 @@ app = Flask(__name__)
 @app.route('/launchpods/<string:namespace>', methods=['POST'])
 def launchPods(namespace):
     print("In launchPods .. Checking to see if Namespace ,",namespace, "exists")
-    namespaceExists = subprocess.Popen(["/bin/bash","-c","/k8s-demo-deploy/scripts/namespaceExists.sh",namespace])
+    namespaceExists = subprocess.Popen(["/bin/bash","/k8s-demo-deploy/scripts/namespaceExists.sh",namespace])
     print("Exit code:", namespaceExists.wait())
     if namespaceExists.returncode != 0:
         return 'Error: namespace already exists, aborting\n', 400
 
     print("Executing setup.sh for ",namespace)
-    p = subprocess.Popen(["/bin/bash","-c","/k8s-demo-deploy/scripts/setup.sh",namespace])
+    p = subprocess.Popen(["/bin/bash","/k8s-demo-deploy/scripts/setup.sh",namespace])
     print("Completed setup.sh for ",namespace)
 
     return "OK"
@@ -23,13 +23,13 @@ def launchPods(namespace):
 @app.route('/cleanpods/<string:namespace>', methods=['POST'])
 def cleanPods(namespace):
     print("In cleanPods .. Checking to see if Namespace ,",namespace, "exists")
-    namespaceExists = subprocess.Popen(["/bin/bash","-c","/k8s-demo-deploy/scripts/namespaceExists.sh",namespace])
+    namespaceExists = subprocess.Popen(["/bin/bash","/k8s-demo-deploy/scripts/namespaceExists.sh",namespace])
     print("Exit code:", namespaceExists.wait())
     if namespaceExists.returncode == 0:
         return 'Error: namespace does not exist, nothing to do\n', 200
 
     print("Executing setup.sh for ",namespace)
-    p = subprocess.Popen(["/bin/bash","-c","/k8s-demo-deploy/scripts/cleanup.sh",namespace])
+    p = subprocess.Popen(["/bin/bash","/k8s-demo-deploy/scripts/cleanup.sh",namespace])
     print("Completed cleanup.sh for ",namespace)
 
     return "OK"
@@ -38,13 +38,13 @@ def cleanPods(namespace):
 @app.route('/deployworkload/<string:namespace>', methods=['POST'])
 def deployWorkload(namespace):
     print("In deployWorkloads .. Checking to see if Namespace ,",namespace, "exists")
-    namespaceExists = subprocess.Popen(["/bin/bash","-c","/k8s-demo-deploy/scripts/namespaceExists.sh",namespace])
+    namespaceExists = subprocess.Popen(["/bin/bash","/k8s-demo-deploy/scripts/namespaceExists.sh",namespace])
     print("Exit code:", namespaceExists.wait())
     if namespaceExists.returncode == 0:
         return 'Error: namespace does not exist, nothing to do\n', 400
 
     print("Executing createBrokenStuff.sh for ",namespace)
-    p = subprocess.Popen(["/bin/bash","-c","/k8s-demo-deploy/scripts/createBrokenStuff.sh",namespace])
+    p = subprocess.Popen(["/bin/bash","/k8s-demo-deploy/scripts/createBrokenStuff.sh",namespace])
     print("Completed createBrokenStuff.sh for ",namespace)
 
     return "OK"
