@@ -55,6 +55,6 @@ if __name__ == '__main__':
     port = 6060
     if 'SF_PORT' in os.environ:
         port = os.environ['SF_PORT']
-    gcloud = subprocess.Popen(["/bin/bash","gcloud container clusters get-credentials standard-cluster-1 --zone us-east1-b --project se-cicd-demo"])
+    gcloud = subprocess.Popen(["/bin/bash","-c","gcloud container clusters get-credentials standard-cluster-1 --zone us-east1-b --project se-cicd-demo"])
     print("Exit code:", gcloud.wait())
     app.run(host='0.0.0.0', port=port)
