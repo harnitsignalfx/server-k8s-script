@@ -52,9 +52,12 @@ def deployWorkload(namespace):
 @app.route('/deletenamespace/<string:namespace>', methods=['POST'])
 def deleteNamespace(namespace):
     print("In deleteNamespace .. Deleting Namespace ,",namespace, "exists")
-    namespaceDelete = subprocess.Popen(["kubectl","delete","namespace",namespace])
-    print("Output:", namespaceDelete.communicate()[0])
-    return "OK"
+    namespaceDelete = subprocess.Popen(["kubectl","delete","namespace",namespace],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = namespaceDelete.communicate()
+    if (out.decode("utf-8") != ""):
+        return out.decode("utf-8")
+    else:
+        return err.decode("utf-8")
 
 
 if __name__ == '__main__':
