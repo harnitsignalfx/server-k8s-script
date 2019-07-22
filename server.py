@@ -49,6 +49,13 @@ def deployWorkload(namespace):
 
     return "OK"
 
+@app.route('/deletenamespace/<string:namespace>', methods=['POST'])
+def deleteNamespace(namespace):
+    print("In deployWorkloads .. Checking to see if Namespace ,",namespace, "exists")
+    namespaceDelete = subprocess.Popen(["/bin/bash","kubectl delete",namespace])
+    print("Exit code:", namespaceDelete.wait())
+    return "OK"
+
 
 if __name__ == '__main__':
     # default port is 6060
