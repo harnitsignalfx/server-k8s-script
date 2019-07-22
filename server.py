@@ -51,8 +51,8 @@ def deployWorkload(namespace):
 
 @app.route('/deletenamespace/<string:namespace>', methods=['POST'])
 def deleteNamespace(namespace):
-    print("In deployWorkloads .. Checking to see if Namespace ,",namespace, "exists")
-    namespaceDelete = subprocess.Popen(["/bin/bash","kubectl delete",namespace])
+    print("In deleteNamespace .. Checking to see if Namespace ,",namespace, "exists")
+    namespaceDelete = subprocess.Popen(["kubectl delete",namespace])
     print("Exit code:", namespaceDelete.wait())
     return "OK"
 
